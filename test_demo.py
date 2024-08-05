@@ -2,22 +2,21 @@ import unittest
 import demo
 
 class TestCalculate(unittest.TestCase):
+#add a setup method to keep code DRY
+    def setUp(self):
+        self.calculate = demo.Calculate() #is now an instance variable
 
     def test_add(self):
-        calculate = demo.Calculate()
-        self.assertEqual(calculate.add(2, 3), 5)
+        self.assertEqual(self.calculate.add(2, 3), 5)
 
     def test_subtract(self):
-        calculate = demo.Calculate()
-        self.assertEqual(calculate.subtract(5, 3), 2)
+        self.assertEqual(self.calculate.subtract(5, 3), 2)
 
     def test_multiply(self):
-        calculate = demo.Calculate()
-        self.assertEqual(calculate.multiply(5, 3), 15)
+        self.assertEqual(self.calculate.multiply(5, 3), 15)
 
     def test_divide(self):
-        calculate = demo.Calculate()
-        self.assertEqual(calculate.divide(9, 3), 3)
+        self.assertEqual(self.calculate.divide(9, 3), 3)
 
 
 
