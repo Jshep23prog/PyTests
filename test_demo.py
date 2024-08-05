@@ -1,10 +1,16 @@
 import unittest
 import demo
 
+#skip decorator
+# @unittest.skip("Skipping this test for example reasons")
 class TestCalculate(unittest.TestCase):
 #add a setup method to keep code DRY
     def setUp(self):
         self.calculate = demo.Calculate() #is now an instance variable
+
+    #teardown is useful to perfomr certain actions after the test has been completed
+    # def tearDown(self):
+    #     print("This is a teardown method, executes after each test")
 
     def test_add(self):
         self.assertEqual(self.calculate.add(2, 3), 5)
@@ -12,11 +18,14 @@ class TestCalculate(unittest.TestCase):
     def test_subtract(self):
         self.assertEqual(self.calculate.subtract(5, 3), 2)
 
+    # @unittest.skipIf(True, "Skipping because cond is true")
     def test_multiply(self):
         self.assertEqual(self.calculate.multiply(5, 3), 15)
 
     def test_divide(self):
         self.assertEqual(self.calculate.divide(9, 3), 3)
+        with self.assertRaises(ValueError):
+            self.calculate.divide(10, 0)
 
 
 
