@@ -1,20 +1,30 @@
-from app.deemo import add, subtract, multiply, divide
+from app.deemo import ShoppingCart
 import pytest
+#fixture to keep code dry
+@pytest.fixture
+def cart():
+    return ShoppingCart()
 
-#skip decorator
-# @pytest.mark.skip("Arbitrary skip")
+def test_add_item(cart):
+    cart.add_item("apple", 2)
+    assert cart.get_item_count("apple") == 2
+    assert cart.get_total_items() == 2
 
-def test_add():
-    assert add(10, 20) == 30
+def test_remove_item(cart):
+    cart.add_item("apple", 3)
+    cart.remove_item("apple", 2)
+    assert cart.get_item_count("apple") == 1
+    assert cart.get_total_items() == 1
 
-def test_subtract():
-    assert subtract(30, 20) == 10
+def test_get_cart_items(cart):
+    cart.add_item("apple", 2)
+    cart.add_item("banana", 3)
+    items = cart.get_cart_items()
+    assert "apple" in items
+    assert "banana" in items
 
-def test_multiply():
-    assert multiply(10, 20) == 200
-
-def test_divide():
-    assert divide(100, 20) == 5
-    #case for asserting exceptions
-    with pytest.raises(ValueError):
-        divide(4, 0)
+def test_clear_cart(cart):
+    cart.add_item("apple", 3)
+    cart.clear_cart()
+    assert cart.get_total_items() == 0
+    
